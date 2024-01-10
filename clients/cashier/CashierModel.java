@@ -132,6 +132,29 @@ public class CashierModel extends Observable
   }
   
   /**
+   * Remove the last added item from the basket
+   */
+  public void doRemove()
+  {
+    String theAction = "";
+    if (theBasket != null && theBasket.size() > 0)
+      {
+        Product lastAddedProduct = theBasket.removeLastAdded();
+        if (lastAddedProduct != null)
+        {
+          theAction = "Removed " + lastAddedProduct.getDescription();
+        }
+      }
+      else
+      {
+        theAction = "Basket is empty";
+      }
+    setChanged();
+    notifyObservers(theAction);
+  }
+
+  
+  /**
    * Customer pays for the contents of the basket
    */
   public void doBought()

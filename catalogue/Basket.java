@@ -55,10 +55,33 @@ public class Basket extends ArrayList<Product> implements Serializable
    * @return true if successfully adds the product
    */
   // Will be in the Java doc for Basket
-  @Override
+ 
   public boolean add( Product pr )
   {                              
     return super.add( pr );     // Call add in ArrayList
+  }
+  
+  /**
+   * Remove the last added product from the basket.
+   * @return the last added product or null if the basket is empty
+   */
+  public Product removeLastAdded() {
+      if (this.size() > 0) {
+          int lastIndex = this.size() - 1;
+          Product lastAddedProduct = this.get(lastIndex);
+
+          // Decrease the quantity by 1
+          lastAddedProduct.setQuantity(lastAddedProduct.getQuantity() - 1);
+
+          // If the quantity is now 0, remove the entire product
+          if (lastAddedProduct.getQuantity() == 0) {
+              this.remove(lastIndex);
+          }
+
+          return lastAddedProduct;
+      } else {
+          return null; // Basket is empty
+      }
   }
 
   /**

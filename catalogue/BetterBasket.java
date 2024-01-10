@@ -39,4 +39,27 @@ public class BetterBasket extends Basket implements Serializable
 
       return true; 
   }
-}
+  
+//Override removeLastAdded method to support merging
+  @Override
+  public Product removeLastAdded() {
+	    if (this.size() > 0) {
+	        int lastIndex = this.size() - 1;
+	        Product lastAddedProduct = this.get(lastIndex);
+
+	        // Check if there are more than one of the same product in the basket
+	        long count = this.stream().filter(product -> product.equals(lastAddedProduct)).count();
+	        if (count > 1) {
+	            // If there are more than one, decrement the quantity of the last added product
+	            lastAddedProduct.setQuantity(lastAddedProduct.getQuantity() - 1);
+	        } else {
+	            // If there is only one, remove the product from the basket
+	            this.remove(lastIndex);
+	        }
+
+	        return lastAddedProduct;
+	    } else {
+	        return null; // Basket is empty
+	    }
+	}
+  }
