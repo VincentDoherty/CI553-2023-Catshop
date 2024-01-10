@@ -9,8 +9,7 @@ import java.util.Collections;
  * @author  Your Name 
  * @version 1.0
  */
-public class BetterBasket extends Basket implements Serializable
-{
+public class BetterBasket extends Basket implements Serializable {
   private static final long serialVersionUID = 1L;
   
 
@@ -41,7 +40,7 @@ public class BetterBasket extends Basket implements Serializable
   }
   
 //Override removeLastAdded method to support merging
-  @Override
+  @Override 
   public Product removeLastAdded() {
       if (this.size() > 0) {
           int lastIndex = this.size() - 1;
