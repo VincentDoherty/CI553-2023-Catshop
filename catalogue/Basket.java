@@ -70,10 +70,10 @@ public class Basket extends ArrayList<Product> implements Serializable
           int lastIndex = this.size() - 1;
           Product lastAddedProduct = this.get(lastIndex);
 
-          // Decrease the quantity by 1
+          // Decrease the quantity by 1 without removing the entire product
           lastAddedProduct.setQuantity(lastAddedProduct.getQuantity() - 1);
 
-          // If the quantity is now 0, remove the entire product
+          // If the quantity is now 0, remove the product from the basket
           if (lastAddedProduct.getQuantity() == 0) {
               this.remove(lastIndex);
           }
