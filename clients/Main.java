@@ -19,6 +19,8 @@ import clients.warehousePick.PickModel;
 import clients.warehousePick.PickView;
 import middle.LocalMiddleFactory;
 import middle.MiddleFactory;
+import clients.cashier.BetterCashierModel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,8 +54,8 @@ class Main
     startCustomerGUI_MVC( mlf );
     if ( many ) 
      startCustomerGUI_MVC( mlf );
-    startCashierGUI_MVC( mlf );
-    startCashierGUI_MVC( mlf );
+    startBetterCashierGUI_MVC(mlf); // Use BetterCashierModel instead of CashierModel
+    startBetterCashierGUI_MVC(mlf); // Use BetterCashierModel instead of CashierModel
     startBackDoorGUI_MVC( mlf );
     if ( many ) 
       startPickGUI_MVC( mlf );
@@ -80,25 +82,21 @@ class Main
     window.setVisible(true);         // start Screen
   }
 
-  /**
-   * start the cashier client
-   * @param mlf A factory to create objects to access the stock list
-   */
-  public void startCashierGUI_MVC(MiddleFactory mlf )
-  {
-    JFrame  window = new JFrame();
-    window.setTitle( "Cashier Client MVC");
-    window.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-    Dimension pos = PosOnScrn.getPos();
-    
-    CashierModel model      = new CashierModel(mlf);
-    CashierView view        = new CashierView( window, mlf, pos.width, pos.height );
-    CashierController cont  = new CashierController( model, view );
-    view.setController( cont );
+//Use BetterCashierModel instead of CashierModel
+  public void startBetterCashierGUI_MVC(MiddleFactory mlf) {
+      JFrame window = new JFrame();
+      window.setTitle("Better Cashier Client MVC");
+      window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      Dimension pos = PosOnScrn.getPos();
 
-    model.addObserver( view );       // Add observer to the model
-    window.setVisible(true);         // Make window visible
-    model.askForUpdate();            // Initial display
+      BetterCashierModel model = new BetterCashierModel(mlf); // Use BetterCashierModel instead of CashierModel
+      CashierView view = new CashierView(window, mlf, pos.width, pos.height); // Still use CashierView
+      CashierController cont = new CashierController(model, view);
+      view.setController(cont);
+
+      model.addObserver(view); // Add observer to the model
+      window.setVisible(true); // Make window visible
+      model.askForUpdate(); // Initial display
   }
 
   public void startBackDoorGUI_MVC(MiddleFactory mlf )
