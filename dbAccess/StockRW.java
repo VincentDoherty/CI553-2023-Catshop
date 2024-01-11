@@ -81,6 +81,30 @@ public class StockRW extends StockR implements StockReadWriter
       throw new StockException( "SQL addStock: " + e.getMessage() );
     }
   }
+  
+  /**
+   * Customer removes last item in basket, quantity of stock increased if successful.
+   * @param pNum Product number
+   * @param amount Amount of stock bought
+   * @return true if succeeds else false
+   */
+  public synchronized boolean addProduct2(String pNum, int amount) throws StockException {
+	    int updates = 0;
+	    try {
+	        updates = getStatementObject().executeUpdate(
+	                "update StockTable set stockLevel = stockLevel + " + amount +
+	                        "         where productNo = '" + pNum + "'"
+	        );
+	        // Check if the update was successful
+	        if (updates > 0) {
+	            DEBUG.trace("DB StockRW: addProduct2(%s,%d)", pNum, amount);
+	            return true;  // Successful stock return
+	        }
+	    } catch (SQLException e) {
+	        throw new StockException("SQL addProduct2: " + e.getMessage());
+	    }
+	    return false;  // Unsuccessful stock return
+	}
 
 
   /**

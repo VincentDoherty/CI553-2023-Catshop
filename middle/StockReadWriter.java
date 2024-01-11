@@ -35,5 +35,15 @@ public interface StockReadWriter extends StockReader
    * @throws middle.StockException if issue
    */
   void modifyStock(Product detail) throws StockException;
+  
+  /**
+   * Customer removes most recent product,
+   * stock level is thus incremented by amount bought.
+   * @param pName Product name
+   * @param amount Quantity of product
+   * @return StockNumber, Description, Price, Quantity
+   * @throws middle.StockException if issue
+  */
+   boolean addProduct2(String pName, int amount) throws StockException;
 
 }

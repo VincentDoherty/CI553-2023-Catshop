@@ -19,6 +19,7 @@ public class CashierModel extends Observable
   private State       theState   = State.process;   // Current state
   private Product     theProduct = null;            // Current product
   private Basket      theBasket  = null;            // Bought items
+  
 
   private String      pn = "";                      // Product being processed
 
@@ -131,26 +132,37 @@ public class CashierModel extends Observable
     setChanged(); notifyObservers(theAction);
   }
   
+  
   /**
    * Remove the last added item from the basket
    */
-  public void doRemove()
-  {
-    String theAction = "";
-    if (theBasket != null && theBasket.size() > 0)
-      {
-        Product lastAddedProduct = theBasket.removeLastAdded();
-        if (lastAddedProduct != null)
-        {
-          theAction = "Removed " + lastAddedProduct.getDescription();
-        }
+  public void doRemove() {
+      String theAction = "";
+
+      if (theBasket != null && theBasket.size() > 0) {
+          Product lastAddedProduct = theBasket.removeLastAdded();
+          if (lastAddedProduct != null) {
+              try {
+                  // Call addProduct2 from theStock and handle StockException
+                  boolean stockReturned = theStock.addProduct2(lastAddedProduct.getProductNum(), 1);
+                  if (stockReturned) {
+                      theAction = "Removed " + lastAddedProduct.getDescription() + " from the basket.";
+                  } else {
+                      theAction = "Error returning product to stock.";
+                  }
+              } catch (StockException e) {
+                  e.printStackTrace();  // Print the stack trace for debugging
+                  theAction = "StockException: " + e.getMessage();
+              }
+          } else {
+              theAction = "Failed to retrieve the last added product.";
+          }
+      } else {
+          theAction = "Basket is empty";
       }
-      else
-      {
-        theAction = "Basket is empty";
-      }
-    setChanged();
-    notifyObservers(theAction);
+
+      setChanged();
+      notifyObservers(theAction);
   }
 
   

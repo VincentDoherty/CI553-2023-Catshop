@@ -102,6 +102,20 @@ public class      R_StockRW
   {
     aStockRW.addStock( pNum, amount );
   }
+  
+  /**
+   * Customer removes most recent product,
+   * stock level is thus incremented by amount bought.
+   * @param pNum The Product number
+   * @param amount Quantity of product
+   * @return true if the operation is successful, false otherwise
+   * @throws StockException if underlying error
+   */
+  public synchronized boolean addProduct2(String pNum, int amount)
+          throws StockException
+  {
+      return aStockRW.addProduct2(pNum, amount);
+  }
 
 
   /**

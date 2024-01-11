@@ -91,6 +91,28 @@ public class F_StockRW extends F_StockR
       throw new StockException( "Net: " + e.getMessage() );
     }
   }
+  
+  /**
+   * Removes product and hence increments number in stock list
+   * @return StockNumber, Description, Price, Quantity
+   * @throws StockException if remote exception
+   */
+
+ 
+  public boolean addProduct2( String pName, int amount )
+	         throws StockException
+	  {
+	    DEBUG.trace("F_StockRW:buyStock()" );
+	    try
+	    {
+	      if ( aR_StockRW == null ) connect();
+	      return aR_StockRW.addProduct2( pName, amount );
+	    } catch ( RemoteException e )
+	    {
+	      aR_StockRW = null;
+	      throw new StockException( "Net: " + e.getMessage() );
+	    }
+	  }
 
   /**
    * Modifies Stock details for a given product number.
